@@ -40,7 +40,7 @@ export const updatePost = (req, res) => {
     result.content = req.body.content;
     result.cover_url = req.body.cover_url;
     result.save();
-    res.json({ message: 'Post updated!' });
+    res.json(result);
   }).catch((error) => {
     res.status(500).json({ error });
   });

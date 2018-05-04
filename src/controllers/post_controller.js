@@ -6,6 +6,8 @@ export const createPost = (req, res) => {
   post.tags = req.body.tags;
   post.content = req.body.content;
   post.cover_url = req.body.cover_url;
+  post.x = req.body.x;
+  post.y = req.body.y;
   post.save().then((result) => {
     res.json({ message: 'Post created!' });
   }).catch((error) => {
@@ -39,6 +41,8 @@ export const updatePost = (req, res) => {
     result.tags = req.body.tags;
     result.content = req.body.content;
     result.cover_url = req.body.cover_url;
+    result.x = req.body.x;
+    result.y = req.body.y;
     result.save();
     res.json(result);
   }).catch((error) => {

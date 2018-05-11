@@ -16,27 +16,26 @@ export const signup = (req, res, next) => {
     return res.status(422).send('You must provide email and password');
   }
 
-  // TODO:
-  // here you should do a mongo query to find if a user already exists with this email.
-  // if user exists then return an error. If not, use the User model to create a new user.
   User.findOne({ email: req.body.email }).then((result) => {
-    return res.status(422).send('User already exists');
-  }).catch((error) => {
-    res.status(500).json({ error });
-  });
-
-  const user = new User();
-  user.email = email;
-  user.password = password;
-  user.save().then((result) => {
-    res.send({ token: tokenForUser(req.user) });
-  }).catch((error) => {
-    res.status(500).json({ error });
+    if (result != null) {
+      return res.status(420).send('User already exists');
+    } else {
+      const user = new User();
+      user.email = email;
+      user.password = password;
+      user.save().then((r) => {
+        res.send({ token: tokenForUser(r) });
+        // res.send('signed up');
+      }).catch((error) => {
+        res.status(500).json({ error });
+      });
+    }
   });
 };
 
 // encodes a new token for a user object
 function tokenForUser(user) {
+  console.log(user);
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.AUTH_SECRET);
 }

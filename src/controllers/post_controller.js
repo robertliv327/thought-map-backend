@@ -8,6 +8,7 @@ export const createPost = (req, res) => {
   post.cover_url = req.body.cover_url;
   post.x = req.body.x;
   post.y = req.body.y;
+  post.author = req.user;
   post.save().then((result) => {
     res.json({ message: 'Post created!' });
   }).catch((error) => {
@@ -43,6 +44,7 @@ export const updatePost = (req, res) => {
     result.cover_url = req.body.cover_url;
     result.x = req.body.x;
     result.y = req.body.y;
+    result.author = req.user;
     result.save();
     res.json(result);
   }).catch((error) => {

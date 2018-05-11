@@ -2,9 +2,12 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import dotenv from 'dotenv';
 
 // and import User
 import User from '../models/user_model';
+
+dotenv.config({ silent: true });
 
 // options for local strategy, we'll use email AS the username
 // not have separate ones
@@ -17,7 +20,6 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
   secretOrKey: process.env.AUTH_SECRET,
 };
-
 
 // username + password authentication strategy
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {

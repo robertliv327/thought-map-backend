@@ -19,21 +19,35 @@ UserSchema.pre('save', function beforeUserSave(next) {
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
 
-  // generate salt and hash password
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(user.password, salt);
+  // generate a salt
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
 
-  // overwrite plain text password with encrypted password
-  user.password = hash;
-  return next();
+    // hash the password using our new salt
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) return next(err);
+
+      // override the cleartext password with the hashed one
+      user.password = hash;
+      next();
+    });
+  });
+
+  // // generate salt and hash password
+  // const salt = bcrypt.genSaltSync(10);
+  // const hash = bcrypt.hashSync(user.password, salt);
+  //
+  // // overwrite plain text password with encrypted password
+  // user.password = hash;
+  // return next();
 });
 
 //  note use of named function rather than arrow notation
 //  this arrow notation is lexically scoped and prevents binding scope, which mongoose relies on
 UserSchema.methods.comparePassword = function comparePassword(candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, hash, (error, comparisonResult) => {
+  bcrypt.compare(candidatePassword, this.password, (error, comparisonResult) => {
+    if (error) return callback(error);
     return callback(null, comparisonResult);
-    callback(error);
   });
 };
 

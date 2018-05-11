@@ -1,7 +1,5 @@
 # lab5-robertliv327
 
-* node with babel
-* expressjs
-* airbnb eslint rules
+This lab added the server to our blog frontend from lab 4. We made use of express, mongodb, and mongoose to create a server, and later added in authentification with passport support.
 
-Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+Everything went pretty smoothly for this lab. The toughest part was definitely the user model and user controller portion.

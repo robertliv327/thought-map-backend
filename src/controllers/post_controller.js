@@ -9,6 +9,7 @@ export const createPost = (req, res) => {
   post.x = req.body.x;
   post.y = req.body.y;
   post.author = req.user;
+  post.username = req.user.username;
   post.save().then((result) => {
     res.json({ message: 'Post created!' });
   }).catch((error) => {
@@ -45,6 +46,7 @@ export const updatePost = (req, res) => {
     result.x = req.body.x;
     result.y = req.body.y;
     result.author = req.user;
+    // result.username = req.user.username;
     result.save();
     res.json(result);
   }).catch((error) => {

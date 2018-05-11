@@ -9,6 +9,7 @@ export const signin = (req, res, next) => {
 };
 
 export const signup = (req, res, next) => {
+  const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 
@@ -21,11 +22,11 @@ export const signup = (req, res, next) => {
       return res.status(420).send('User already exists');
     } else {
       const user = new User();
+      user.username = username;
       user.email = email;
       user.password = password;
       user.save().then((r) => {
         res.send({ token: tokenForUser(r) });
-        // res.send('signed up');
       }).catch((error) => {
         res.status(500).json({ error });
       });

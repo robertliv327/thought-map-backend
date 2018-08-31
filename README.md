@@ -1,5 +1,5 @@
-# lab5-robertliv327
+# Thought Map Backend
 
-This lab added the server to our blog frontend from lab 4. We made use of express, mongodb, and mongoose to create a server, and later added in authentification with passport support.
+[Check out the app here](http://rlivaudais-cs52-blog.surge.sh)
 
-Everything went pretty smoothly for this lab. The toughest part was definitely the user model and user controller portion.
+This repo contains the code for the app's backend built with express, mongodb, mongoose, and passport authentication support.
